@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Metadata -->
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+<!-- Load React. -->
+<!-- Note: when deploying, replace "development.js" with "production.min.js". -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.js"></script>
+<!-- Load Chart.js -->
+
+<head>
+    <meta charset="UTF-8">
+    <title>colour_mixer</title>
+    <link rel="stylesheet" type="text/css" href="style_sheet.css">
+</head>
+<body>
+<div class="column">
+    <span class="circle_base"></span>
+    <canvas id="upperChart"></canvas>
+</div>
+<div class="column">
+    <div class="sliders">
+        <p>
+            <label class="text1">Ultramarine: <span class="percent"></span></label>
+            <input type="range" min="0" max="100" value="50" class="slider" id="color1">
+        </p>
+        <p>
+            <label class="text1">Titanium White: <span class="percent"></span></span> </label>
+            <input type="range" min="0" max="100" value="50" class="slider" id="color2">
+        </p>
+        <p>
+            <label class="text1">Viridian: <span class="percent"></span></label>
+            <input type="range" min="0" max="100" value="50" class="slider" id="color3">
+        </p>
+        <p>
+            <label class="text1">Cadmium Red: <span class="percent"></span></label>
+            <input type="range" min="0" max="100" value="50" class="slider" id="color4">
+        </p>
+        <p>
+            <label class="text1">Cadmium Yellow: <span class="percent"></span></label>
+            <input type="range" min="0" max="100" value="50" class="slider" id="color5">
+        </p>
+    </div>
+</div>
+
+<div></div>
+<script src='./colour_mix_script.js'></script>
+
+</body>
+</html>
