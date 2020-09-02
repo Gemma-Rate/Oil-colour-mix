@@ -1,6 +1,6 @@
 # Oil-colour-mix
 
-Oils are amongst the most versatile types of paint and have been used to produce world famous works of art, such as Van Gough's Starry Night and Da Vinci's Mona Lisa. 
+Oils are amongst the most versatile types of paint and have been used to produce world famous works of art, such as Van Gogh's Starry Night and Da Vinci's Mona Lisa. 
 
 However, mixing realistic colours can be a big challenge, particularly for beginners. Many paint sets package unusual combinations of colours and even a pure looking blue or red can turn out to contain a little yellow or black. This means that trying to mix a simple colour, such as sky blue (blue+white), can be deceptive and end up looking more purple than expected! 
 
