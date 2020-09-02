@@ -1,23 +1,25 @@
 
 //* Input data //*
 
-var ultramarine = Color().cmyk(100, 50, 0, 70);
-var titaniumWhite = Color().cmyk(0, 0, 0, 0);
-var viridian = Color().cmyk(100, 42, 58, 60);
-var cadmiumRed = Color().cmyk(0, 100, 100, 15);
-var cadmiumYellow = Color().cmyk(0, 10, 100, 0);
+var ultramarine = Color().cmyk(87, 93, 0, 40);
+var titaniumWhite = Color().cmyk(3, 5, 4, 0);
+var viridian = Color().cmyk(76, 30, 63, 11);
+var cadmiumRed = Color().cmyk(0, 100, 85, 11);
+var cadmiumYellow = Color().cmyk(0, 4, 100, 0);
 // Define the colours in terms of cmyk.
 
 availableColors = [ultramarine, titaniumWhite, viridian, cadmiumRed, cadmiumYellow];
+initialLabels = ['Ultramarine', 'Titanium White', 'Viridian', 'Cadmium Red', 'Cadmium Yellow']
 
 //* Style the sliders //*
 
-var i;
-for (i = 0; i < availableColors.length; i++) {
-    document.getElementsByClassName("slider")[i].style.backgroundColor = availableColors[i].rgbString()
+function newSlider(i, availableColors, labels){
+    // Make a new slider colour.
+        document.getElementsByClassName("slider")[i].style.backgroundColor = availableColors[i].rgbString()
+        document.getElementsByClassName("colourname")[i].innerHTML = labels[i]
 }
 
-function displayPercent(i) {
+function displayPercent(i, document) {
 // Function to change the percentage displayed by the bar.
     document.getElementsByClassName("percent")[i].innerHTML = document.getElementsByClassName("slider")[i].value;
     // Get the value of slider i.
@@ -28,56 +30,52 @@ function displayPercent(i) {
      }
 }
 
-displayPercent(0);
-displayPercent(1);
-displayPercent(2);
-displayPercent(3);
-displayPercent(4);
+var i;
+for (i = 0; i < availableColors.length; i++) {
+    // Update the display percent and sliders.
+    document.getElementsByClassName("slider").onchange = displayPercent(i, document);
+    newSlider(i, availableColors, initialLabels);
+}
+
 
 //* Get data weights from slider //*
 
-dataWeights = [];
-colorList = [];
-// List of the cmyk colour objects
-
-var i=0;
-for (i = 0; i < availableColors.length; i++) {
-    var outputVal = document.getElementsByClassName("slider")[i].value
-    // Get slider value.
-    console.log(i)
-    if (outputVal === "0") {
-        // Do nothing if value is zero.
-    }
-    else{
-      console.log(outputVal)
-      console.log(i)
-      dataWeights.push(outputVal)
-      colorList.push(availableColors[i])
-      // Update colour list with non zero percentages.
+function getSliderVals(availableColors){
+    dataWeights = [];
+    colorList = [];
+    // List of the cmyk colour objects
+    var i=0;
+    for (i = 0; i < availableColors.length; i++) {
+        var outputVal = document.getElementsByClassName("slider")[i].value;
+        // Get slider value.
+        if (outputVal === "0") {
+            // Do nothing if value is zero.
+        }
+        else{
+          dataWeights.push(outputVal);
+          colorList.push(availableColors[i]);
+          // Update colour list with non zero percentages and available colours.
+        }
     }
 }
+
+getSliderVals(availableColors)
+
 // Percentage of pie chart for each colour.
 
 
 //* Show the pie chart //*
 
-var ctx2 = document.getElementById("upperChart").getContext('2d');
+var doughnut = document.getElementById("upperChart").getContext('2d');
 // Get canvas element.
-var myChart = new Chart(ctx2, {
+var myChart = new Chart(doughnut, {
     type: 'doughnut',
     data: {
-        labels: ['Ultramarine', 'Titanium White', 'Viridian', 'Cadmium Red', 'Cadmium Yellow'],
+        labels: initialLabels,
         datasets: [{
             label: '# of Votes',
             data: dataWeights,
             backgroundColor: colorList.map(x => x.rgbString()), // Convert color list to rgb string values.
-            borderColor: [
-                'rgb(255, 255, 255)',
-                'rgb(255, 255, 255)',
-                'rgb(255, 255, 255)',
-                'rgb(255, 255, 255)',
-                'rgb(255, 255, 255)'
-            ],
             // Set the border colours.
             borderWidth: 2
         }]
@@ -111,7 +109,6 @@ for (i = 0; i < colorList.length; i++) {
   // Do nothing if percent value of the colour is zero.
   }
   else {
-  console.log(dataWeights[i])
     for (j = 0; j < colorList.length; j++) {
       if (dataWeights[j] === "0") {
         // Do nothing if percent value of the colour is zero.
@@ -119,7 +116,6 @@ for (i = 0; i < colorList.length; i++) {
       else{
         scaleTot += dataWeights[j]/dataWeights.slice(-1)[0]
         // Get total scaling (first/last+second/last+...)
-        console.log(scaleTot)
       }
     scaling = dataWeights[i]/dataWeights.slice(-1)[0]
     cmykSum = colorList[i].mix(cmykSum, scaling/scaleTot);
@@ -130,3 +126,79 @@ for (i = 0; i < colorList.length; i++) {
 }
 
 document.getElementsByClassName("circle_base")[0].style.backgroundColor = cmykSum.rgbString()
+// Background circle to fill doughnut.
+
+//* Add new colours //*
+
+function addColour(name, c, m, y, k){
+
+    var c = parseInt(c)
+    var m = parseInt(m)
+    var y = parseInt(y)
+    var k = parseInt(k)
+
+    console.log(typeof(c))
+    var newColour = Color().cmyk(c, m, y, k);
+    console.log(c, m, y, k)
+
+    var colourName = name;
+
+    var sliderList = document.getElementById("sliderscol");
+    var newP = document.createElement("p");
+    // Add new paragraph to slider list.
+
+    var newLabel = document.createElement("label");
+    newLabel.className = "text1";
+
+
+    var newColourName = document.createElement("span");
+    newColourName.className = "text1";
+    newColourName.textContent = colourName+":";
+    newLabel.appendChild(newColourName);
+    // Make new colour label span and add it to the label.
+
+    var newPercent = document.createElement("span");
+    newPercent.class="percent";
+    newLabel.appendChild(newPercent);
+
+    sliderList.appendChild(newLabel);
+    // Add new label element.
+
+    var newSlider = document.createElement("input");
+    newSlider.type = "range";
+    newSlider.className = "slider";
+    // Make a new slider and style it.
+    newP.appendChild(newSlider);
+    // Add new slider to new paragraph.
+    sliderList.appendChild(newSlider);
+    // Make a new slider and add it to the slider list.
+
+    sliderList.appendChild(document.createElement("br"))
+
+    var existingSliders = document.getElementsByClassName("slider")
+
+    newSlider.style.backgroundColor = newColour.rgbString()
+    //document.getElementsByClassName("colourname")[-1].innerHTML = colourName
+    newPercent = newSlider.value;
+
+}
+
+//* Update the doughnut plot with new or removed colours //*
+
+function addColourChart(doughnut, newLabel, newData) {
+    // Add a new colour to the chart.
+    doughnut.data.labels.push(newLabel);
+    doughnut.data.datasets.forEach((dataset) => {
+        dataset.data.push(newData);
+    });
+    doughnut.update();
+}
+
+function removeColourChart(doughnut) {
+    // Remove a colour from the chart.
+    doughnut.data.labels.pop();
+    doughnut.data.datasets.forEach((dataset) => {
+        dataset.data.pop();
+    });
+    doughnut.update();
+}
