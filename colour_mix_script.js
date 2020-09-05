@@ -68,7 +68,7 @@ getSliderVals(availableColors)
 
 var doughnut = document.getElementById("upperChart").getContext('2d');
 // Get canvas element.
-var myChart = new Chart(doughnut, {
+var doughnutChart = new Chart(doughnut, {
     type: 'doughnut',
     data: {
         labels: initialLabels,
@@ -181,23 +181,28 @@ function addColour(name, c, m, y, k){
     //document.getElementsByClassName("colourname")[-1].innerHTML = colourName
     newPercent = newSlider.value;
 
+    // Get chart object.
+    addColourChart(doughnutChart, colourName, newPercent, newColour);
+
 }
 
 //* Update the doughnut plot with new or removed colours //*
 
-function addColourChart(doughnut, newLabel, newData) {
+function addColourChart(chart, newChartLabel, newData, newColour) {
     // Add a new colour to the chart.
-    doughnut.data.labels.push(newLabel);
-    doughnut.data.datasets.forEach((dataset) => {
+    chart.data.labels.push(newChartLabel);
+    chart.data.datasets.forEach((dataset) => {
         dataset.data.push(newData);
+        dataset.backgroundColor.push(newColour.rgbString())
     });
-    doughnut.update();
+    //chart.style.backgroundColor = chart.style.backgroundColor.push(newColour.rgbString())
+    chart.update();
 }
 
-function removeColourChart(doughnut) {
+function removeColourChart(chart) {
     // Remove a colour from the chart.
-    doughnut.data.labels.pop();
-    doughnut.data.datasets.forEach((dataset) => {
+    chart.data.labels.pop();
+    chart.data.datasets.forEach((dataset) => {
         dataset.data.pop();
     });
     doughnut.update();
