@@ -42,7 +42,7 @@ for (i = 0; i < availableColors.length; i++) {
 
 function getSliderVals(availableColors){
     dataWeights = [];
-    colorList = [];
+    colourList = [];
     // List of the cmyk colour objects
     var i=0;
     for (i = 0; i < availableColors.length; i++) {
@@ -53,13 +53,15 @@ function getSliderVals(availableColors){
         }
         else{
           dataWeights.push(outputVal);
-          colorList.push(availableColors[i]);
+          colourList.push(availableColors[i]);
           // Update colour list with non zero percentages and available colours.
         }
+        console.log(colourList)
     }
+    return dataWeights, colourList;
 }
 
-getSliderVals(availableColors)
+var dataWeights, colourList = getSliderVals(availableColors)
 
 // Percentage of pie chart for each colour.
 
@@ -75,7 +77,7 @@ var doughnutChart = new Chart(doughnut, {
         datasets: [{
             label: '# of Votes',
             data: dataWeights,
-            backgroundColor: colorList.map(x => x.rgbString()), // Convert color list to rgb string values.
+            backgroundColor: colourList.map(x => x.rgbString()), // Convert colour list to rgb string values.
             // Set the border colours.
             borderWidth: 2
         }]
@@ -88,45 +90,71 @@ var doughnutChart = new Chart(doughnut, {
 });
 
 
+// Update the pie chart with slider values.
+
+function updateChart() {
+    // Add a new colour to the chart.
+
+    dataWeights, colourList = getSliderVals(availableColors)
+    console.log(colourList)
+    doughnutChart.data.datasets.forEach((dataset) => {
+        dataset.data = dataWeights;
+        dataset.backgroundColor = colourList.map(x => x.rgbString());
+    });
+    //chart.style.backgroundColor = chart.style.backgroundColor.push(newColour.rgbString())
+    doughnutChart.update();
+    mixColours(dataWeights, colourList);
+}
+
+
 // Mix the colours. //
 
-var cmykSum = colorList[-1]
+function mixColours(dataWeights, colourList) {
 
-if (colorList.length > 1) {
-// Only run pop and sum if length of the color list is > 1 color.
+    if (colourList.length > 1) {
+    // Only run pop and sum if length of the colour list is > 1 colour.
 
-var cmykSum = colorList.pop();
-// Remove list end element and assign it to the cmyk variable.
-var i;
-var j;
-// Define loop variables.
+        var cmykSum = Color();
+        // Remove list end element and assign it to the cmyk variable.
+        var i;
+        var j;
+        // Define loop variables.
 
-var scaleTot = 1;
-// Total initial scale for the popped last element (dataWeights[end]/dataWeights[end]=1).
-for (i = 0; i < colorList.length; i++) {
+        var scaleTot = 1;
+        // Total initial scale for the popped last element (dataWeights[end]/dataWeights[end]=1).
+        for (i = 0; i < colourList.length; i++) {
 
-  if (dataWeights[i] === "0") {
-  // Do nothing if percent value of the colour is zero.
-  }
-  else {
-    for (j = 0; j < colorList.length; j++) {
-      if (dataWeights[j] === "0") {
-        // Do nothing if percent value of the colour is zero.
+          if (dataWeights[i] === "0") {
+          // Do nothing if percent value of the colour is zero.
+          }
+          else {
+            for (j = 0; j < colourList.length; j++) {
+              if (dataWeights[j] === "0") {
+                // Do nothing if percent value of the colour is zero.
+                }
+              else{
+                scaleTot += dataWeights[j]/dataWeights.slice(-1)[0]
+                // Get total scaling (first/last+second/last+...)
+              }
+
+              mixClone = colourList[i].clone()
+              // Clone for mixing.
+            scaling = dataWeights[i]/dataWeights.slice(-1)[0]
+            cmykSum = mixClone.mix(cmykSum, scaling/scaleTot);
+            //cmykSum = colourList[i].mix(cmykSum, dataWeights[i]/100);
+            }
+          }
         }
-      else{
-        scaleTot += dataWeights[j]/dataWeights.slice(-1)[0]
-        // Get total scaling (first/last+second/last+...)
-      }
-    scaling = dataWeights[i]/dataWeights.slice(-1)[0]
-    cmykSum = colorList[i].mix(cmykSum, scaling/scaleTot);
+        document.getElementsByClassName("circle_base")[0].style.backgroundColor = cmykSum.rgbString()
+        // Background circle to fill doughnut.
     }
-  }
-}
+    else{
+    //console.log(colourList)
+        document.getElementsByClassName("circle_base")[0].style.backgroundColor = colourList[0].rgbString()
 
-}
+    }
 
-document.getElementsByClassName("circle_base")[0].style.backgroundColor = cmykSum.rgbString()
-// Background circle to fill doughnut.
+};
 
 //* Add new colours //*
 
@@ -137,9 +165,7 @@ function addColour(name, c, m, y, k){
     var y = parseInt(y)
     var k = parseInt(k)
 
-    console.log(typeof(c))
     var newColour = Color().cmyk(c, m, y, k);
-    console.log(c, m, y, k)
 
     var colourName = name;
 
@@ -205,5 +231,6 @@ function removeColourChart(chart) {
     chart.data.datasets.forEach((dataset) => {
         dataset.data.pop();
     });
-    doughnut.update();
+    chart.update();
 }
+
