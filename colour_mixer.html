@@ -11,7 +11,7 @@
     <title>colour_mixer</title>
     <link rel="stylesheet" type="text/css" href="style_sheet.css">
 </head>
-<body>
+<body onload="onLoadStart()">
 <div class="column">
     <span class="circle_base"></span>
     <canvas id="upperChart"></canvas>
@@ -30,26 +30,31 @@
 </div>
 <div class="column" id="sliderscol">
     <div class="sliders">
-        <p>
-            <label class="text1"><span class="colourname"></span>: <span class="percent"></span></label>
-            <input type="range" min="0" max="100" value="50" class="slider" id="color1" onchange="updateChart()">
-        </p>
-        <p>
-            <label class="text1"><span class="colourname"></span>: <span class="percent"></span> </label>
-            <input type="range" min="0" max="100" value="50" class="slider" id="color2" onchange="updateChart()">
-        </p>
-        <p>
-            <label class="text1"><span class="colourname"></span>: <span class="percent"></span></label>
-            <input type="range" min="0" max="100" value="50" class="slider" id="color3" onchange="updateChart()">
-        </p>
-        <p>
-            <label class="text1"><span class="colourname"></span>: <span class="percent"></span></label>
-            <input type="range" min="0" max="100" value="50" class="slider" id="color4" onchange="updateChart()">
-        </p>
-        <p>
-            <label class="text1"><span class="colourname"></span>: <span class="percent"></span></label>
-            <input type="range" min="0" max="100" value="50" class="slider" id="color5" onchange="updateChart()">
-        </p>
+        <div id="colour1">
+            <label class="text1"><span class="colourname"></span>: <span class="percent" id="ultramarinePercent"></span></label>
+            <input type="range" min="0" max="100" value="50" class="slider" id="ultramarine" onchange="updateChart()" oninput="displayPercent(this.id)">
+            <button type="button" onclick="removeColour(this.id)" class="btn" id="ultramarineBtn">-</button>
+        </div>
+        <div id="colour2">
+            <label class="text1"><span class="colourname"></span>: <span class="percent" id="whitePercent"></span> </label>
+            <input type="range" min="0" max="100" value="50" class="slider" id="white" onchange="updateChart()" oninput="displayPercent(this.id)">
+            <button type="button" onclick="removeColour(this.id)" class="btn" id="whiteBtn">-</button>
+        </div>
+        <div id="colour3">
+            <label class="text1"><span class="colourname"></span>: <span class="percent" id="viridianPercent"></span></label>
+            <input type="range" min="0" max="100" value="50" class="slider" id="viridian" onchange="updateChart()" oninput="displayPercent(this.id)">
+            <button type="button" onclick="removeColour(this.id)" class="btn" id="viridianBtn">-</button>
+        </div>
+        <div id="colour4">
+            <label class="text1"><span class="colourname"></span>: <span class="percent" id="cadmiumredPercent"></span></label>
+            <input type="range" min="0" max="100" value="50" class="slider" id="cadmiumred" onchange="updateChart()" oninput="displayPercent(this.id)">
+            <button type="button" onclick="removeColour(this.id)" class="btn" id="cadmiumredBtn">-</button>
+        </div>
+        <div id="colour5">
+            <label class="text1"><span class="colourname"></span>: <span class="percent" id="cadmiumyellowPercent"></span></label>
+            <input type="range" min="0" max="100" value="50" class="slider" id="cadmiumyellow" onchange="updateChart()" oninput="displayPercent(this.id)">
+            <button type="button" onclick="removeColour(this.id)" class="btn" id="cadmiumyellowBtn">-</button>
+        </div>
     </div>
 </div>
 
