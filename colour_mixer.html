@@ -17,13 +17,13 @@
     <canvas id="upperChart"></canvas>
     <br>
     <br>
-    <form action="#" id="forms">
+    <form action="#" id="forms" onsubmit="return false">
         <label class="text1">Colour:</label> <input type="text" id="name" ><br>
         <label class="text1">C:</label> <input type="text" id="C" maxlength="3" size="3">
         <label class="text1">M:</label> <input type="text" id="M" maxlength="3" size="3">
         <label class="text1"> Y:</label> <input type="text" id="Y" maxlength="3" size="3">
         <label class="text1">K:</label> <input type="text" id="K" maxlength="3" size="3">
-        <input type="submit" value="submit" onclick="addColour(document.getElementById('name').value,
+        <input type="submit" value="Add" onclick="addColour(document.getElementById('name').value,
         document.getElementById('C').value, document.getElementById('M').value,
         document.getElementById('Y').value, document.getElementById('K').value)">
     </form>
@@ -35,26 +35,31 @@
             <input type="range" min="0" max="100" value="50" class="slider" id="ultramarine" onchange="updateChart()" oninput="displayPercent(this.id)">
             <button type="button" onclick="removeColour(this.id)" class="btn" id="ultramarineBtn">-</button>
         </div>
+        <br>
         <div id="colour2">
             <label class="text1"><span class="colourname"></span>: <span class="percent" id="whitePercent"></span> </label>
             <input type="range" min="0" max="100" value="50" class="slider" id="white" onchange="updateChart()" oninput="displayPercent(this.id)">
             <button type="button" onclick="removeColour(this.id)" class="btn" id="whiteBtn">-</button>
         </div>
+        <br>
         <div id="colour3">
             <label class="text1"><span class="colourname"></span>: <span class="percent" id="viridianPercent"></span></label>
             <input type="range" min="0" max="100" value="50" class="slider" id="viridian" onchange="updateChart()" oninput="displayPercent(this.id)">
             <button type="button" onclick="removeColour(this.id)" class="btn" id="viridianBtn">-</button>
         </div>
+        <br>
         <div id="colour4">
             <label class="text1"><span class="colourname"></span>: <span class="percent" id="cadmiumredPercent"></span></label>
             <input type="range" min="0" max="100" value="50" class="slider" id="cadmiumred" onchange="updateChart()" oninput="displayPercent(this.id)">
             <button type="button" onclick="removeColour(this.id)" class="btn" id="cadmiumredBtn">-</button>
         </div>
+        <br>
         <div id="colour5">
             <label class="text1"><span class="colourname"></span>: <span class="percent" id="cadmiumyellowPercent"></span></label>
             <input type="range" min="0" max="100" value="50" class="slider" id="cadmiumyellow" onchange="updateChart()" oninput="displayPercent(this.id)">
             <button type="button" onclick="removeColour(this.id)" class="btn" id="cadmiumyellowBtn">-</button>
         </div>
+        <br>
     </div>
 </div>
 

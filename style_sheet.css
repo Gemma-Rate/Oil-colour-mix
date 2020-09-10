@@ -63,5 +63,15 @@ body {
   opacity: 100;
 }
 
+.btn {
+  background: white;
+  color: #202020;
+  border: none;
+  font-size: 20px;
+}
 
+input {
+  font-size: 20px;
+  color: #202020;
+}
 

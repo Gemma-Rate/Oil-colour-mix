@@ -1,6 +1,5 @@
 
 
-
 function onLoadStart(){
 //* Input data //*
 
@@ -36,7 +35,6 @@ function newSlider(i, availableColors, labels){
 function displayPercent(inputId) {
 // Function to change the percentage displayed by the bar.
       var slider = document.getElementById(inputId);
-      console.log(slider)
       var name = inputId + "Percent"
       document.getElementById(name).innerHTML = slider.value;
       // Set the ith percent html element to the value from the html.
@@ -202,7 +200,7 @@ function addColour(name, c, m, y, k){
     newSlider.id = colourName
     newSlider.onchange = updateChart;
     // Make a new slider and style it.
-    newSlider.addEventListener('onchange', function(){displayPercent(colourName)});
+    newSlider.addEventListener('oninput', function(){displayPercent(colourName)});
     newP.appendChild(newSlider);
     // Add new slider to new paragraph.
     sliderList.appendChild(newP);
@@ -219,6 +217,7 @@ function addColour(name, c, m, y, k){
     // Make new removal button.
 
     sliderList.appendChild(document.createElement("br"))
+    // Add spacing.
 
     var existingSliders = document.getElementsByClassName("slider")
 
@@ -249,7 +248,6 @@ function removeColour(inputId){
     slidersRemoveList[indexToRemove].classList.remove("slider");
     // Remove slider element style to remove from class list.
 
-    console.log(indexToRemove)
     var percentRemoveList = document.getElementsByClassName("percent");
     percentRemoveList[indexToRemove].classList.remove("percent");
     // Remove percent element style to remove from class list.
@@ -259,6 +257,11 @@ function removeColour(inputId){
     availableColors.splice(indexToRemove, 1)
     // Now remove from master list of colours (to prevent errors elsewhere).
     initialLabels.splice(indexToRemove, 1)
+
+    removeColourChart(doughnutChart, indexToRemove, availableColors)
+    // Remove from the chart.
+    updateChart()
+    // Update the chart automatically.
 
 }
 
@@ -272,15 +275,16 @@ function addColourChart(chart, newChartLabel, newData, newColour) {
         dataset.data.push(newData);
         dataset.backgroundColor.push(newColour.rgbString())
     });
-    //chart.style.backgroundColor = chart.style.backgroundColor.push(newColour.rgbString())
     chart.update();
 }
 
-function removeColourChart(chart) {
+function removeColourChart(chart, idRemove, newColourList) {
     // Remove a colour from the chart.
-    chart.data.labels.pop();
+
+    chart.data.labels.splice(idRemove, 1);
     chart.data.datasets.forEach((dataset) => {
-        dataset.data.pop();
+        dataset.data.splice(idRemove, 1);
+        dataset.backgroundColor = newColourList.map(x => x.rgbString());
     });
     chart.update();
 }
