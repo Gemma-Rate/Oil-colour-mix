@@ -12,9 +12,12 @@
     <link rel="stylesheet" type="text/css" href="style_sheet.css">
 </head>
 <body onload="onLoadStart()">
+<!-- Run this javascript function when the page is loaded -->
+
 <div class="column">
     <span class="circle_base"></span>
     <canvas id="upperChart"></canvas>
+    <!-- Include the chart and background circle -->
     <br>
     <br>
     <form action="#" id="forms" onsubmit="return false">
@@ -27,6 +30,7 @@
         document.getElementById('C').value, document.getElementById('M').value,
         document.getElementById('Y').value, document.getElementById('K').value)">
     </form>
+    <!-- Form for new colours to be submitted -->
 </div>
 <div class="column" id="sliderscol">
     <div class="sliders">
@@ -61,10 +65,12 @@
         </div>
         <br>
     </div>
+    <!-- Sliders for colour percentages -->
 </div>
 
 
 <script src='./colour_mix_script.js'></script>
+<!-- Load javascript -->
 
 </body>
 </html>
