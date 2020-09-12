@@ -200,7 +200,8 @@ function addColour(name, c, m, y, k){
     newSlider.id = colourName
     newSlider.onchange = updateChart;
     // Make a new slider and style it.
-    newSlider.addEventListener('oninput', function(){displayPercent(colourName)});
+    //newSlider.addEventListener('oninput', function(){displayPercent(colourName)});
+    newSlider.oninput = function(){displayPercent(colourName)};
     newP.appendChild(newSlider);
     // Add new slider to new paragraph.
     sliderList.appendChild(newP);
